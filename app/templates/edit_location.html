@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* 🔹 Page Layout */
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .page-header h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    background: var(--gradient-accent);
+    background-clip: text;  
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+
+  /* 🔹 Form Card */
+  .form-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+  }
+
+  .form-container:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* 🔹 Form Controls */
+  form label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-base);
+  }
+
+  form input[type="text"] {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    outline: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  form input[type="text"]:focus {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* 🔹 Buttons */
+  .form-actions {
+    margin-top: var(--spacing-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--gradient-accent);
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-xl);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-primary:hover {
+    box-shadow: var(--shadow-hover);
+    transform: scale(1.03);
+  }
+
+  .btn-cancel {
+    background: transparent;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    transition: all 0.3s ease;
+  }
+
+  .btn-cancel:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  /* 🔹 Responsive */
+  @media (max-width: 600px) {
+    .form-container {
+      padding: var(--spacing-lg);
+    }
+
+    .btn-primary, .btn-cancel {
+      width: 100%;
+      text-align: center;
+    }
+
+    .form-actions {
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+  }
+</style>
+
+<div class="page-header">
+  <h2>✏️ Edit Location</h2>
+  <p class="text-muted">Update warehouse or store location details below.</p>
+</div>
+
+<div class="form-container">
+  <form method="POST">
+    <label for="name">Location Name</label>
+    <input type="text" id="name" name="name" value="{{ location.name }}" required>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">💾 Update</button>
+      <a href="{{ url_for('main.locations') }}" class="btn-cancel">✖ Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

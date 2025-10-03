@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Inventory App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <h1 style="margin-right: 40px;">TechFlow Electronics</h1>
+    <nav>
+      <a href="{{ url_for('main.products') }}">Products</a> |
+      <a href="{{ url_for('main.locations') }}">Locations</a> |
+      <a href="{{ url_for('main.movements') }}">Movements</a> |
+      <a href="{{ url_for('main.report') }}">Report</a> |
+      <a href="{{ url_for('main.balance') }}">Balance</a>
+    </nav>
+    <hr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="msgs">
+          {% for category, msg in messages %}
+            <div class="msg {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

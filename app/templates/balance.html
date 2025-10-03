@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2 class="page-title">
+      <span class="page-icon"></span>
+      Balance
+    </h2>
+    <p class="page-subtitle">Current stock of products in each warehouse</p>
+  </div>
+
+  <!-- Balance Table Card -->
+  <div class="edit-card">
+    <div class="edit-header">
+      <h3 class="edit-title">
+        <span class="edit-icon"></span>
+        Stock Overview
+      </h3>
+    </div>
+
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Warehouse</th>
+          <th>Qty</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in grid %}
+        <tr>
+          <td>{{ row.product.name }}</td>
+          <td>{{ row.location.name }}</td>
+          <td>{{ row.qty }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+.page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #06d6a0, #118ab2, #06d6a0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-icon {
+  font-size: 1.8rem;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.page-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Card styling */
+.edit-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Table styling */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+
+.styled-table th, .styled-table td {
+  padding: 0.8rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.styled-table th {
+  background: rgba(6, 214, 160, 0.1);
+  color: #06d6a0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+</style>
+{% endblock %}

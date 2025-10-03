@@ -1,0 +1,577 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2 class="page-title">
+      <span class="page-icon"></span>
+      Edit Product
+    </h2>
+    <p class="page-subtitle">Update product information</p>
+  </div>
+
+  <!-- Edit Form Section -->
+  <div class="edit-card">
+    <div class="edit-header">
+      <h3 class="edit-title">
+        <span class="edit-icon"></span>
+        Product Details
+      </h3>
+      <div class="edit-badge">Editing</div>
+    </div>
+
+    <form method="POST" class="edit-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon"></span>
+            Product Name
+          </label>
+          <input type="text" name="name" value="{{ product.name }}" class="form-input" placeholder="Enter product name" required>
+          <div class="form-hint">Enter the full product name with model/variant</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon"></span>
+            Total Quantity
+          </label>
+          <input type="number" name="total_qty" value="{{ product.total_qty }}" min="0" class="form-input" placeholder="0" required>
+          <div class="form-hint">Current stock quantity in inventory</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-icon"></span>
+          Update Product
+        </button>
+        <a href="{{ url_for('main.products') }}" class="btn btn-secondary">
+          <span class="btn-icon"></span>
+          Cancel
+        </a>
+      </div>
+    </form>
+
+    <!-- Product Preview -->
+    <div class="preview-section">
+      <h4 class="preview-title">
+        <span class="preview-icon"></span>
+        Preview
+      </h4>
+      <div class="product-preview" id="productPreview">
+        <div class="preview-card">
+          <div class="preview-header">
+            <h5 class="preview-name" id="previewName">{{ product.name }}</h5>
+            <div class="preview-qty">
+              <span class="qty-label">Stock</span>
+              <span class="qty-value qty-good" id="previewQty">{{ product.total_qty }}</span>
+            </div>
+          </div>
+          <div class="preview-status" id="previewStatus">
+            Ready for update
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back Navigation -->
+  <div class="back-nav">
+    <a href="{{ url_for('main.products') }}" class="back-link">
+      <span class="back-icon">←</span>
+      Back to Products
+    </a>
+  </div>
+</div>
+
+<style>
+/* Page-specific styles */
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.page-icon {
+  font-size: var(--font-size-2xl);
+  animation: editPulse 2s ease-in-out infinite;
+}
+
+@keyframes editPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+}
+
+.page-subtitle {
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+}
+
+/* Edit Card */
+.edit-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.edit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  background-size: 200% 3px;
+  animation: borderFlow 3s linear infinite;
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.edit-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin: 0;
+}
+
+.edit-icon {
+  font-size: var(--font-size-xl);
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.edit-badge {
+  background: var(--gradient-accent);
+  color: var(--text-primary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 15px rgba(6, 214, 160, 0.3);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(6, 214, 160, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(6, 214, 160, 0.5); }
+}
+
+/* Form Styling */
+.edit-form {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.form-grid {
+  display: grid;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+.label-icon {
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-lg);
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  background: var(--bg-glass-hover);
+  transform: translateY(-1px);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.form-hint {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Action Buttons */
+.form-actions {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  padding: var(--spacing-lg);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  min-width: 150px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  color: var(--text-primary);
+  border: 2px solid var(--accent-color);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-glass-hover);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.btn-icon {
+  font-size: var(--font-size-base);
+}
+
+/* Preview Section */
+.preview-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.preview-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.preview-icon {
+  font-size: var(--font-size-base);
+  animation: eyeBlink 3s ease-in-out infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 90%, 100% { transform: scale(1); }
+  95% { transform: scale(1, 0.1); }
+}
+
+.preview-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  transition: all 0.3s ease;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.preview-name {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+  margin-right: var(--spacing-md);
+}
+
+.preview-qty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.qty-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.qty-value {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 2px solid;
+  text-align: center;
+  min-width: 60px;
+  transition: all 0.3s ease;
+}
+
+.qty-good {
+  color: var(--success-color);
+  border-color: var(--success-color);
+  background: rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+}
+
+.preview-status {
+  font-size: var(--font-size-sm);
+  color: var(--text-accent);
+  font-style: italic;
+  text-align: center;
+  padding: var(--spacing-sm);
+  background: rgba(6, 214, 160, 0.05);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(6, 214, 160, 0.2);
+}
+
+/* Back Navigation */
+.back-nav {
+  text-align: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.back-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-glass-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+
+.back-icon {
+  font-size: var(--font-size-lg);
+  transition: transform 0.3s ease;
+}
+
+.back-link:hover .back-icon {
+  transform: translateX(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .edit-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .preview-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .preview-qty {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: var(--font-size-2xl);
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .edit-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .form-actions {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Animation for dynamic updates */
+.form-input {
+  animation: inputReady 0.5s ease-out;
+}
+
+@keyframes inputReady {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<script>
+// Live preview updates
+document.addEventListener('DOMContentLoaded', function() {
+  const nameInput = document.querySelector('input[name="name"]');
+  const qtyInput = document.querySelector('input[name="total_qty"]');
+  const previewName = document.getElementById('previewName');
+  const previewQty = document.getElementById('previewQty');
+  const previewStatus = document.getElementById('previewStatus');
+
+  function updatePreview() {
+    if (nameInput && previewName) {
+      previewName.textContent = nameInput.value || 'Product Name';
+    }
+    
+    if (qtyInput && previewQty) {
+      const qty = parseInt(qtyInput.value) || 0;
+      previewQty.textContent = qty;
+      
+      // Update quantity styling based on value
+      previewQty.className = 'qty-value ';
+      if (qty < 10) {
+        previewQty.className += 'qty-low';
+      } else if (qty < 50) {
+        previewQty.className += 'qty-good';
+      } else {
+        previewQty.className += 'qty-high';
+      }
+    }
+    
+    // Update status
+    if (previewStatus) {
+      previewStatus.textContent = 'Changes ready to save';
+    }
+  }
+
+  if (nameInput) {
+    nameInput.addEventListener('input', updatePreview);
+  }
+  
+  if (qtyInput) {
+    qtyInput.addEventListener('input', updatePreview);
+  }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Current Stock</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Current Stock Overview</h1>
+    <table>
+        <tr>
+            <th>Location / Product</th>
+            {% for product in products %}
+                <th>{{ product.name }}</th>
+            {% endfor %}
+        </tr>
+
+        {% for location in locations %}
+        <tr>
+            <td>{{ location.name }}</td>
+            {% for product in products %}
+                <td>{{ stock_data[location.location_id][product.product_id] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

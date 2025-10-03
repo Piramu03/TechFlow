@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2 class="page-title">
+      <span class="page-icon">✏️</span>
+      Edit Movement
+    </h2>
+    <p class="page-subtitle">Update movement details</p>
+  </div>
+
+  <!-- Edit Form Card -->
+  <div class="edit-card">
+    <div class="edit-header">
+      <h3 class="edit-title">
+        <span class="edit-icon"></span>
+        Movement Details
+      </h3>
+      <div class="edit-badge">Editing</div>
+    </div>
+
+    <form method="POST" class="edit-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Product</label>
+          <select name="product_id" class="form-input" required>
+            {% for p in products %}
+              <option value="{{ p.product_id }}" {% if p.product_id == movement.product_id %}selected{% endif %}>{{ p.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">From (blank for Stock In)</label>
+          <select name="from_location" class="form-input">
+            <option value="">-- None --</option>
+            {% for l in locations %}
+              <option value="{{ l.location_id }}" {% if movement.from_location == l.location_id %}selected{% endif %}>{{ l.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">To (blank for Stock Out)</label>
+          <select name="to_location" class="form-input">
+            <option value="">-- None --</option>
+            {% for l in locations %}
+              <option value="{{ l.location_id }}" {% if movement.to_location == l.location_id %}selected{% endif %}>{{ l.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input type="number" name="qty" class="form-input" min="1" value="{{ movement.qty }}" required>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-icon"></span> Update Movement
+        </button>
+        <a href="{{ url_for('main.movements') }}" class="btn btn-secondary">
+          <span class="btn-icon"></span> Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #06d6a0, #118ab2, #06d6a0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-icon {
+  font-size: 1.8rem;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.page-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Card and form styling */
+.edit-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 1rem;
+}
+
+.edit-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f9fafb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-badge {
+  background: linear-gradient(90deg, #06d6a0, #118ab2);
+  color: #f9fafb;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #e5e7eb;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #06d6a0, #118ab2);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #e5e7eb;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.2);
+}
+</style>
+{% endblock %}

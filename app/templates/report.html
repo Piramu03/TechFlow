@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2 class="page-title">
+      <span class="page-icon"></span>
+      Movement Report
+    </h2>
+    
+  </div>
+
+  <!-- Report Table Card -->
+  <div class="edit-card">
+    <div class="edit-header">
+      <h3 class="edit-title">
+        <span class="edit-icon"></span>
+        All Movements
+      </h3>
+    </div>
+
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Total Quantity</th>
+          <th>Product</th>
+          <th>From → To</th>
+          <th>Quantity Delivered</th>
+          <th>Remaining Stock</th>
+          <th>Timestamp</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in report_data %}
+        <tr>
+          <td>{{ r.total_qty }}</td>
+          <td>{{ r.product }}</td>
+          <td>{{ r.route }}</td>
+          <td>{{ r.delivered }}</td>
+          <td>{{ r.remaining }}</td>
+          <td>{{ r.timestamp }}</td>
+          <td>
+            <a href="{{ url_for('main.edit_movement', id=r.id) }}" class="btn-table edit">Edit</a>
+            <form action="{{ url_for('main.delete_movement', id=r.id) }}" method="POST" style="display:inline;">
+              <button type="submit" onclick="return confirm('Delete movement?');" class="btn-table delete">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+.page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #06d6a0, #118ab2, #06d6a0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-icon {
+  font-size: 1.8rem;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.page-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Card styling */
+.edit-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 1rem;
+}
+
+.edit-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f9fafb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Table styling */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+
+.styled-table th, .styled-table td {
+  padding: 0.8rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.styled-table th {
+  background: rgba(6, 214, 160, 0.1);
+  color: #06d6a0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-table {
+  padding: 5px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-table.edit {
+  background: rgba(6, 214, 160, 0.2);
+  color: #06d6a0;
+}
+
+.btn-table.delete {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.btn-table:hover {
+  opacity: 0.8;
+}
+</style>
+{% endblock %}
