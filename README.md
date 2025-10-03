@@ -30,7 +30,7 @@ TechFlow is a **Flask-based web application** designed to manage products, track
 5.Run the application:
    
     python run.py
-Usage
+## Usage
 
 Add Products: Input Product Name and Initial Quantity.
 
@@ -41,8 +41,9 @@ Check Balance Grid: View current stock status across all locations.
 
 View Movements: Track historical product movements for reference.
 
-Screenshots
-<img width="1803" height="875" alt="Screenshot 2025-10-03 194223" src="https://github.com/user-attachments/assets/8aad098a-cb60-4ee4-95ba-40f188821d35" />
+## Screenshots
+
+<img width="1806" height="891" alt="Screenshot 2025-10-03 194201" src="https://github.com/user-attachments/assets/49def81c-697f-4457-bf82-3a26ba4dcaee" />
 <img width="1696" height="465" alt="Screenshot 2025-10-03 194658" src="https://github.com/user-attachments/assets/66d19bb1-0db0-424d-a22a-42e493f3cfc1" />
 
 
