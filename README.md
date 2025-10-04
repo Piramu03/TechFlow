@@ -9,7 +9,6 @@ TechFlow is a **Flask-based web application** designed to manage products, track
 - **Product Transfers**: Move stock between locations with automated updates.
 - **Balance Grid**: View the current stock of each product at all locations.
 - **Web Interface**: Easy-to-use HTML/CSS/JavaScript frontend.
-- **Notifications**: Option to integrate alerts for low stock or transfers.
 
 ## Installation
 
@@ -36,7 +35,7 @@ TechFlow is a **Flask-based web application** designed to manage products, track
 - **Transfer Stock**: Move items between locations and update quantities automatically.
 - **Check Balance**: View current stock status across all locations.
 - **View Movements**: Track historical product movements for reference.
-- 
+
 ## Screenshots
 
 Add Products
