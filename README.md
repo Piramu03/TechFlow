@@ -32,19 +32,30 @@ TechFlow is a **Flask-based web application** designed to manage products, track
     python run.py
 ## Usage
 
-Add Products: Input Product Name and Initial Quantity.
-
-Transfer Stock: Move items between locations and update quantities automatically.
-
-Check Balance Grid: View current stock status across all locations.
-
-
-View Movements: Track historical product movements for reference.
-
+- **Add Products**: Input Product Name and Initial Quantity.
+- **Transfer Stock**: Move items between locations and update quantities automatically.
+- **Check Balance**: View current stock status across all locations.
+- **View Movements**: Track historical product movements for reference.
+- 
 ## Screenshots
 
-<img width="1806" height="891" alt="Screenshot 2025-10-03 194201" src="https://github.com/user-attachments/assets/49def81c-697f-4457-bf82-3a26ba4dcaee" />
-<img width="1696" height="465" alt="Screenshot 2025-10-03 194658" src="https://github.com/user-attachments/assets/66d19bb1-0db0-424d-a22a-42e493f3cfc1" />
+Add Products
+<img width="1818" height="888" alt="Screenshot 2025-10-04 085754" src="https://github.com/user-attachments/assets/e0e8f7f5-35ef-4fe0-849a-f56da212965b" />
 
+View Products
+<img width="1812" height="900" alt="Screenshot 2025-10-04 085937" src="https://github.com/user-attachments/assets/aa368f54-9531-42ab-a98f-3b55ef7f9a71" />
+
+View Movements
+<img width="1840" height="888" alt="Screenshot 2025-10-04 085736" src="https://github.com/user-attachments/assets/87a03e4f-647a-4156-bd58-1f795255666d" />
+
+Report
+<img width="1806" height="891" alt="Screenshot 2025-10-03 194201" src="https://github.com/user-attachments/assets/49def81c-697f-4457-bf82-3a26ba4dcaee" />
+
+
+## Tech Stack
+- **Backend**: Flask (Python)
+- **Frontend**: HTML, CSS
+- **Database**: SQLite (via SQLAlchemy ORM)
+- **Environment**: Virtual Environment (venv)
 
 
